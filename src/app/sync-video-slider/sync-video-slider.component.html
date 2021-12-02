@@ -1,0 +1,10 @@
+<button (click)="playAll()">Play</button>
+<button (click)="pauseAll()">Pause</button>
+
+<div id="slider_container">
+    <input type="range" min="1" max="10000" [(ngModel)]="seekTime" (ngModelChange)="onSeek($event)"/>
+    <span>{{ seekTime | date:'HH:mm:ss.SSSZ' }}</span>
+    <span>   {{ seekTime }}</span>
+</div>
+
+<ng-content #cmp></ng-content>
