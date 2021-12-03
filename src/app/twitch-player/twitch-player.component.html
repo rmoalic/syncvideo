@@ -1,1 +1,2 @@
-<div id="video_div"></div>
+<div *ngIf="! ready">loading</div>
+<div [hidden]="! ready" id="video_div"></div>

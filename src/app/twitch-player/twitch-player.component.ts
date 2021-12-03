@@ -1,5 +1,4 @@
-import { ThrowStmt } from '@angular/compiler';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnInit } from '@angular/core';
 import { Ivideo } from '../ivideo';
 
 @Component({
@@ -11,8 +10,9 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   @Input()
   video_id: String = "";
   player: any;
+  ready: boolean = false;
 
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef, private ngZone: NgZone) { }
   play(): void {
     this.player.play();
   }
@@ -26,6 +26,11 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
     this.player.mute(is_muted);
   }
 
+  getTotalDuration(): number {
+    console.log(this.player.getDuration());
+    return this.player.getDuration();
+  }
+
   ngOnInit(): void {
     let options = {
       width: 400,
@@ -33,7 +38,14 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
       video: this.video_id,
       parent: ["localhost", "othersite.example.com"]
     };
-    this.player = new Twitch.Player("video_div", options);
+
+    this.ngZone.runOutsideAngular(() => {
+      this.player = new Twitch.Player("video_div", options);
+    })
+    this.player.addEventListener(Twitch.Player.READY, () => {
+      this.ready = true;
+      this.ref.detectChanges();
+    });
   }
 
 }

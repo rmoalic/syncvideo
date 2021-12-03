@@ -13,6 +13,7 @@ export class SyncVideoSliderComponent implements OnInit {
   videos!: QueryList<Ivideo>;
 
   seekTime: number = 0;
+  max_time: number = 0;
 
   constructor() { }
 
@@ -34,7 +35,17 @@ export class SyncVideoSliderComponent implements OnInit {
     });
   }
 
+  private getLongestVideoDuration(): number {
+    let durations = this.videos.map(video => video.getTotalDuration());
+    return Math.max(...durations);
+  }
+
   ngOnInit(): void {
+  }
+  
+  ngAfterContentChecked(): void {
+
+    this.max_time = this.getLongestVideoDuration();
   }
 
 }
