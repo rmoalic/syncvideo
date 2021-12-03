@@ -36,7 +36,7 @@ export class SyncVideoSliderComponent implements OnInit {
   }
 
   private getLongestVideoDuration(): number {
-    let durations = this.videos.map(video => video.getTotalDuration());
+    let durations: number[] = this.videos.map(video => {if (video.ready) {return video.getTotalDuration()} else return 0});
     return Math.max(...durations);
   }
 
