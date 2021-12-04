@@ -13,6 +13,9 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   @Input()
   video_id: string = "";
 
+  @Input()
+  video_offset: number = 0;
+
   constructor(private ref: ChangeDetectorRef, private ngZone: NgZone) { }
 
   initPlayer(): void {
@@ -50,7 +53,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
     this.player.pause();
   }
   seek(position: number): void {
-    this.player.seek(position);
+    this.player.seek(position + this.video_offset);
   }
   mute(is_muted: boolean): void {
     this.player.mute(is_muted);
