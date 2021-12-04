@@ -8,6 +8,8 @@ import { SyncVideoSliderComponent } from './sync-video-slider/sync-video-slider.
 import { FormsModule } from '@angular/forms';
 import { SyncVideoPageComponent } from './sync-video-page/sync-video-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { E404PageComponent } from './e404-page/e404-page.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { AboutPageComponent } from './about-page/about-page.component';
     TwitchPlayerComponent,
     SyncVideoSliderComponent,
     SyncVideoPageComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    HomePageComponent,
+    E404PageComponent
   ],
   imports: [
     BrowserModule,
