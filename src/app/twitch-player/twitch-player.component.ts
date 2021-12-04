@@ -64,6 +64,10 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
     return this.player.getDuration();
   }
 
+  getPosition(): number {
+    return this.player.getCurrentTime();
+  }
+
   ngOnInit(): void {
     this.setVideo(this.video_id);
     console.log("Video ID: " + this.video_id);

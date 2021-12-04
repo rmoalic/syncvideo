@@ -1,17 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-
-class Vod {
-  service: string;
-  video_id: string;
-  offset: number;
-
-  constructor(service: string, video_id: string, offset: number) {
-    this.service = service;
-    this.video_id = video_id;
-    this.offset = offset;
-  }
-}
+import { Vod } from '../vod';
 
 @Component({
   selector: 'app-sync-video-page',

@@ -1,0 +1,20 @@
+<fieldset>
+    <label for="idevent_name">Event Name: </label>
+    <input id="idevent_name" [(ngModel)]="event_name" type="text">
+</fieldset>
+
+<fieldset>
+    <label for="new_video">New video id: </label>
+    <input id="new_video" [(ngModel)]="new_video_id" type="text">
+    <button (click)="add_new_video()">Add</button>
+    <app-twitch-player *ngIf="new_video_id != ''" [video_id]="new_video_id"></app-twitch-player>
+</fieldset>
+
+<div class="video_param" *ngFor="let v of videos">
+    <app-twitch-player [video_id]="v.video_id"></app-twitch-player>
+    <button (click)="place_marker(v)">Place marker</button>
+    <span>Current Offset {{ v.offset * 1000 | date:'HH:mm:ss':'+0000' }}</span>
+</div>
+
+<button (click)="publish()">Publish</button>
+<span>Copy the link: <pre>{{ temporary_link }}</pre></span>

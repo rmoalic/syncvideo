@@ -10,6 +10,7 @@ import { SyncVideoPageComponent } from './sync-video-page/sync-video-page.compon
 import { AboutPageComponent } from './about-page/about-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { E404PageComponent } from './e404-page/e404-page.component';
+import { NewPageComponent } from './new-page/new-page.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { E404PageComponent } from './e404-page/e404-page.component';
     SyncVideoPageComponent,
     AboutPageComponent,
     HomePageComponent,
-    E404PageComponent
+    E404PageComponent,
+    NewPageComponent
   ],
   imports: [
     BrowserModule,

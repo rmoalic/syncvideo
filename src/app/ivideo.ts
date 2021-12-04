@@ -4,5 +4,6 @@ export interface Ivideo {
     seek(position: number): void;
     mute(is_muted: boolean): void;
     getTotalDuration(): number;
+    getPosition(): number;
     ready: boolean;
 }
