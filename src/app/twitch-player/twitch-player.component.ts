@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { Ivideo } from '../ivideo';
 
 @Component({
@@ -7,6 +7,12 @@ import { Ivideo } from '../ivideo';
   styleUrls: ['./twitch-player.component.css']
 })
 export class TwitchPlayerComponent implements OnInit, Ivideo {
+  static nb_players: number = 0;
+  player_nb: number;
+  
+  @ViewChild('playerdiv')
+  player_div!: ElementRef;
+  
   player: any;
   ready: boolean = false;
 
@@ -16,7 +22,10 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   @Input()
   video_offset: number = 0;
 
-  constructor(private ref: ChangeDetectorRef, private ngZone: NgZone) { }
+  constructor(private ref: ChangeDetectorRef, private ngZone: NgZone) {
+    this.player_nb = TwitchPlayerComponent.nb_players;
+    TwitchPlayerComponent.nb_players++;
+  }
 
   initPlayer(): void {
     console.log("INIT")
@@ -29,7 +38,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
     };
 
     this.ngZone.runOutsideAngular(() => {
-      this.player = new Twitch.Player("video_div", options);
+      this.player = new Twitch.Player(this.player_div.nativeElement, options);
     })
     this.player.addEventListener(Twitch.Player.READY, () => {
       this.ready = true;
@@ -69,6 +78,9 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   }
 
   ngOnInit(): void {
+    
+  }
+  ngAfterViewInit(): void {
     this.setVideo(this.video_id);
     console.log("Video ID: " + this.video_id);
   }
