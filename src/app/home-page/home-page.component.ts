@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home-page',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private firestore: Firestore) {
+    const collect = collection(firestore, 'events');
+    console.log("collect",collect);
+    let test = collectionData(collect);
+
+    console.log("TETS", test)
+  }
 
   ngOnInit(): void {
   }

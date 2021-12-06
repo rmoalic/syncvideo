@@ -11,6 +11,9 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { E404PageComponent } from './e404-page/e404-page.component';
 import { NewPageComponent } from './new-page/new-page.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { NewPageComponent } from './new-page/new-page.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent]
