@@ -1,10 +1,22 @@
-<nav>
-  <ul>
-    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
-    <li><a routerLink="/new" routerLinkActive="active">New</a></li>
-    <li><a routerLink="/video-sync" routerLinkActive="active">Sync</a></li>
-    <li><a routerLink="/about" routerLinkActive="active">About</a></li>
-  </ul>
-</nav>
+<div class="h-screen w-screen flex bg-gray-200">
+  <aside class="flex flex-col items-center h-full bg-gray-800 text-gray-200 mr-5">
+    <nav>
+      <ul>
+        <li>
+          <a class="h-16 px-5 flex justify-center items-center w-full border-b" routerLink="/" routerLinkActive="">Home</a>
+        </li>
+        <li>
+          <a class="h-16 px-5 flex justify-center items-center w-full border-b" routerLink="/new" routerLinkActive="bg-gray-400">New</a>
+        </li>
+        <li>
+          <a class="h-16 px-5 flex justify-center items-center w-full border-b" routerLink="/video-sync" routerLinkActive="bg-gray-400">Sync</a>
+        </li>
+        <li>
+          <a class="h-16 px-5 flex justify-center items-center w-full border-b" routerLink="/about" routerLinkActive="bg-gray-400">About</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>
