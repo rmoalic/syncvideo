@@ -1,26 +1,31 @@
-<div class="flex flex-row">
-    <div class="flex-none">
-        <button (click)="playAll()" class="btn-green" title="Play">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        </button>
-        <button (click)="pauseAll()" class="btn-green ml-2 mr-2" title="Pause">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        </button>
-    </div>
+<div class="flex flex-col">
+    <div class="flex flex-row">
+        <div class="flex-none mt-1 mb-1">
+            <button (click)="playAll()" class="btn-green" title="Play">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </button>
+            <button (click)="pauseAll()" class="btn-green ml-2 mr-2" title="Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </button>
+        </div>
 
-    <div id="slider_container" class="flex flex-grow">
-        <input type="range" class="w-full flex-grow" min="1" [attr.max]="max_time" [(ngModel)]="seekTime" (ngModelChange)="onSeek($event)"/>
-        <div class="flex-none">
-            <span>{{ seekTime * 1000 | date:'HH:mm:ss':'+0000' }}</span>
-            /
-            <span>{{ max_time * 1000 | date:'HH:mm:ss':'+0000' }}</span>
+        <div id="slider_container" class="flex flex-grow">
+            <input type="range" class="w-full flex-grow" min="1" [attr.max]="max_time" [(ngModel)]="seekTime" (ngModelChange)="onSeek($event)"/>
+            <div class="flex-none m-auto ml-2">
+                <span>{{ seekTime * 1000 | date:'HH:mm:ss':'+0000' }}</span>
+                /
+                <span>{{ max_time * 1000 | date:'HH:mm:ss':'+0000' }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="flex-grow-1">
+        <div class="grid grid-cols-3 h-full overflow-auto">
+            <ng-content #cmp></ng-content>
         </div>
     </div>
 </div>
-
-<ng-content #cmp></ng-content>

@@ -15,18 +15,23 @@ export class SyncVideoSliderComponent implements OnInit {
   seekTime: number = 0;
   max_time: number = 0;
 
+  playing: boolean = false;
+  ready: boolean = false;
+
   constructor() { }
 
   playAll() {
     this.videos.forEach((video) => {
       video.play();
     });
+    this.playing = true;
   }
 
   pauseAll() {
     this.videos.forEach((video) => {
       video.pause();
     });
+    this.playing = false;
   }
 
   onSeek(event: Event) {
@@ -36,16 +41,22 @@ export class SyncVideoSliderComponent implements OnInit {
   }
 
   private getLongestVideoDuration(): number {
-    let durations: number[] = this.videos.map(video => {if (video.ready) {return video.getTotalDuration()} else return 0});
+    let durations: number[] = this.videos.map(video => {if (video.ready) {return video.getTotalDuration()} else {return 0}});
     return Math.max(...durations);
   }
 
   ngOnInit(): void {
+    setInterval(() => {
+      if (this.playing) this.seekTime += 1;
+    }, 1000);
+    setTimeout(() => {
+      this.max_time = this.getLongestVideoDuration();
+    }, 4000); // TODO: find a way to check if the players are ready
+
   }
   
   ngAfterContentChecked(): void {
-
-    this.max_time = this.getLongestVideoDuration();
+    this.ready = true;
   }
 
 }

@@ -9,6 +9,12 @@ import { Ivideo } from '../ivideo';
 export class TwitchPlayerComponent implements OnInit, Ivideo {
   static nb_players: number = 0;
   player_nb: number;
+
+  @Input()
+  width: number = 400;
+
+  @Input()
+  height: number = 300;
   
   @ViewChild('playerdiv')
   player_div!: ElementRef;
@@ -31,9 +37,10 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
     console.log("INIT")
     //if (this.video_id == "") return;
     let options = {
-      width: 400,
-      height: 300,
+      width: "100%",
+      height: "100%",
       video: this.video_id,
+      autoplay: false,
       parent: ["localhost", "othersite.example.com"]
     };
 
@@ -78,7 +85,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   }
 
   ngOnInit(): void {
-    
+
   }
   ngAfterViewInit(): void {
     this.setVideo(this.video_id);
