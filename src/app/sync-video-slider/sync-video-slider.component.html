@@ -1,7 +1,7 @@
 <div *ngIf="videos.length == 0">
     <p>No videos to sync, create new event: <a class="link" routerLink="/new">New</a></p>
 </div>
-<div *ngIf="videos.length > 0" class="flex flex-col">
+<div class="flex flex-col">
     <div class="flex flex-row">
         <div class="flex-none mt-1 mb-1">
             <button (click)="playAll()" class="btn-green" title="Play">

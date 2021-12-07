@@ -1,3 +1,6 @@
+import { EventEmitter } from '@angular/core';
+
+
 export interface Ivideo {
     play(): void;
     pause(): void;
@@ -6,4 +9,5 @@ export interface Ivideo {
     getTotalDuration(): number;
     getPosition(): number;
     ready: boolean;
+    ready_once: EventEmitter<any>;
 }

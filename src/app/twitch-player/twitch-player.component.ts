@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { Ivideo } from '../ivideo';
 
 @Component({
@@ -28,6 +28,9 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   @Input()
   video_offset: number = 0;
 
+  @Output() 
+  ready_once: EventEmitter<any> = new EventEmitter();
+
   constructor(private ref: ChangeDetectorRef, private ngZone: NgZone) {
     this.player_nb = TwitchPlayerComponent.nb_players;
     TwitchPlayerComponent.nb_players++;
@@ -50,6 +53,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
     this.player.addEventListener(Twitch.Player.READY, () => {
       console.log("Player READY");
       this.ready = true;
+      this.ready_once.emit(null);
       this.ref.detectChanges();
     });
   }

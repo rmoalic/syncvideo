@@ -9,7 +9,7 @@ import { TwitchPlayerComponent } from '../twitch-player/twitch-player.component'
 })
 export class SyncVideoSliderComponent implements OnInit {
 
-  @ContentChildren(TwitchPlayerComponent, { descendants: true})
+  @ContentChildren(TwitchPlayerComponent)
   videos!: QueryList<Ivideo>;
 
   seekTime: number = 0;
@@ -17,6 +17,7 @@ export class SyncVideoSliderComponent implements OnInit {
 
   playing: boolean = false;
   ready: boolean = false;
+  nb_ready: number = 0;
 
   constructor() { }
 
@@ -41,7 +42,13 @@ export class SyncVideoSliderComponent implements OnInit {
   }
 
   private getLongestVideoDuration(): number {
-    let durations: number[] = this.videos.map(video => {if (video.ready) {return video.getTotalDuration()} else {return 0}});
+    if (this.videos.length == 0) return 0;
+    let durations: number[] = this.videos.map(video => {
+      if (video.ready) {
+        return video.getTotalDuration()
+      } else {
+        return 0
+      }});
     return Math.max(...durations);
   }
 
@@ -49,14 +56,21 @@ export class SyncVideoSliderComponent implements OnInit {
     setInterval(() => {
       if (this.playing) this.seekTime += 1;
     }, 1000);
-    setTimeout(() => {
-      this.max_time = this.getLongestVideoDuration();
-    }, 4000); // TODO: find a way to check if the players are ready
-
   }
   
-  ngAfterContentChecked(): void {
-    this.ready = true;
+  ngAfterContentInit(): void {
+    this.videos.map(video => {
+      video.ready_once.subscribe(() => {
+        this.nb_ready++;
+        if (this.nb_ready == this.videos.length) {
+          console.log("All players READY");
+          setTimeout(() => {
+            this.ready = true;
+            this.max_time = this.getLongestVideoDuration();  
+          }, 1000); // TODO: find a way to check if video is loaded
+        }
+      });
+    })
   }
 
 }
