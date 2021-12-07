@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, OnInit, QueryList } from '@angular/core';
+import { Component, ContentChildren, OnInit, QueryList } from '@angular/core';
 import { Ivideo } from '../ivideo';
 import { TwitchPlayerComponent } from '../twitch-player/twitch-player.component';
 
