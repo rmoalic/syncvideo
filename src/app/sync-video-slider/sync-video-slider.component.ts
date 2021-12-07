@@ -9,7 +9,7 @@ import { TwitchPlayerComponent } from '../twitch-player/twitch-player.component'
 })
 export class SyncVideoSliderComponent implements OnInit {
 
-  @ContentChildren (TwitchPlayerComponent)
+  @ContentChildren(TwitchPlayerComponent, { descendants: true})
   videos!: QueryList<Ivideo>;
 
   seekTime: number = 0;

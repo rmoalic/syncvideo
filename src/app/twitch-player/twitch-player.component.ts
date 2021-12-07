@@ -48,6 +48,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
       this.player = new Twitch.Player(this.player_div.nativeElement, options);
     })
     this.player.addEventListener(Twitch.Player.READY, () => {
+      console.log("Player READY");
       this.ready = true;
       this.ref.detectChanges();
     });

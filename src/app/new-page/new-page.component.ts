@@ -39,7 +39,7 @@ export class NewPageComponent implements OnInit {
   }
 
   updateTemporaryLink() {
-    let ret = "/video-sync?";
+    let ret = window.location + "/video-sync?";
     for (let v of this.videos) {
       ret += "&t="+v.video_id+":"+v.offset
     }
