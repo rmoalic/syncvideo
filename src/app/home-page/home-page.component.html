@@ -1,6 +1,23 @@
-<h1 class="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">SyncVideo</h1>
-<ul>
-    <li *ngFor="let i of item | async">
-        <a href="{{ i | eventsDToUrl }}" class="link">{{ i.name }}</a>
-    </li>
-</ul>
+<h1 class="text-2xl font-bold leading-tight text-gray-800">SyncVideo</h1>
+<p class="mt-2 mb-2">SyncVideo is a website to sync up several twitch videos. It makes following an event from different POV easy.</p>
+<div class="grid grid-cols-2">
+    <div class="p-5 border rounded-lg shadow-lg bg-white-300 mr-4">
+        <h2 class="text-1xl font-bold leading-tight text-gray-700">My events</h2>
+        <ul>
+            <li *ngFor="let i of my_item | async">
+                <a href="{{ i | eventsDToUrl }}" class="link"><span class="w-20 truncate">{{ i.name }} (<span>{{ i.creationDate * 1000 | date }}</span>)</span></a>
+            </li>
+        </ul>
+        <div *ngIf="! my_item" class="">
+            Login and create new events, they will appear here.
+        </div>
+    </div>
+    <div class="p-5 border rounded-lg shadow-lg bg-white-300">
+        <h2 class="text-1xl font-bold leading-tight text-gray-700">Latest events</h2>
+        <ul>
+            <li *ngFor="let i of item | async">
+                <a href="{{ i | eventsDToUrl }}" class="link"><span class="w-20 truncate">{{ i.name }}</span> (<span>{{ i.creationDate * 1000 | date }}</span>)</a>
+            </li>
+        </ul>
+    </div>
+</div>
