@@ -11,9 +11,10 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { E404PageComponent } from './e404-page/e404-page.component';
 import { NewPageComponent } from './new-page/new-page.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +25,15 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     AboutPageComponent,
     HomePageComponent,
     E404PageComponent,
-    NewPageComponent
+    NewPageComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
