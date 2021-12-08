@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { EventsDToUrlPipe } from './events-d-to-url.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
     HomePageComponent,
     E404PageComponent,
     NewPageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    EventsDToUrlPipe
   ],
   imports: [
     BrowserModule,

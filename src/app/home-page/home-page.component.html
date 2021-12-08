@@ -1,9 +1,6 @@
-<h1>SyncVideo</h1>
+<h1 class="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">SyncVideo</h1>
 <ul>
     <li *ngFor="let i of item | async">
-      {{ i.name }}
+        <a href="{{ i | eventsDToUrl }}" class="link">{{ i.name }}</a>
     </li>
-<p>---</p>
-    <li><a href="/video-sync?t=1223018937"  >TMGL</a></li>
-    <li><a href="/video-sync?t=1218429460:1197&t=1218441400:264" class="link">TMGL Challenger step 7</a></li>
 </ul>
