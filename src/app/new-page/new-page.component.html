@@ -24,8 +24,8 @@
         </fieldset>
 
         <button (click)="publish()" class="btn-green mr-2">Publish</button>
-        <span>OR Copy the link: </span>
-        <p class="m-4 break-all">{{ temporary_link }}</p>
+        <span>OR Copy the link: </span><br/>
+        <a [href]="temporary_link" class="link m-4 break-all">{{ temporary_link }}</a>
     </div>
     <div class="grid grid-cols-2 h-full">
         <div class="border border-solid border-gray-300 p-3 mt-2 mb-2" *ngFor="let v of videos">

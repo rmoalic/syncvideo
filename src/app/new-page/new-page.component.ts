@@ -1,7 +1,6 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { Vod } from '../vod';
 import { TwitchPlayerComponent } from '../twitch-player/twitch-player.component';
-import { Events_d } from '../event_d.model';
 import { EventsService } from '../events.service';
 
 @Component({
@@ -14,9 +13,22 @@ export class NewPageComponent implements OnInit {
   videos_players!: QueryList<TwitchPlayerComponent>;
 
   event_name: string= "";
-  new_video_id: string = "";
+  _new_video_id: string = "";
   videos: Vod[] = [];
   temporary_link: string = "";
+
+  set new_video_id(s: string) {
+    console.log(s);
+    let temp_vid: string = s;
+    temp_vid = temp_vid.replace("https://www.twitch.tv/videos/", "");
+    temp_vid = temp_vid.split("?")[0];
+    this._new_video_id = temp_vid;
+  }
+
+  get new_video_id(): string {
+    return this._new_video_id;
+  }
+
   constructor(private es: EventsService) { }
 
   add_new_video() {
@@ -31,7 +43,6 @@ export class NewPageComponent implements OnInit {
 
   place_marker(v: Vod) {
     let selected_player = this.videos_players.find((player) => {
-      console.log(player);
       return player.video_id == v.video_id;
     });
     if (selected_player == undefined) return;
@@ -58,5 +69,4 @@ export class NewPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
