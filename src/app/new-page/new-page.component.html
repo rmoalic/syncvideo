@@ -12,7 +12,7 @@
             <legend class="text-sm">Adding videos</legend>
             <div>
                 <label for="service-select" class="block">Select video service: </label>
-                <select name="vide-services" id="service-select">
+                <select name="video-services" id="service-select">
                     <option value="twitch">Twitch.tv</option>
                 </select>
             </div>
@@ -30,8 +30,8 @@
     <div class="grid grid-cols-2 h-full">
         <div class="border border-solid border-gray-300 p-3 mt-2 mb-2" *ngFor="let v of videos">
             <app-twitch-player [video_id]="v.video_id"></app-twitch-player>
-            <button (click)="place_marker(v)" class="btn-green">Place marker</button>
-            <span>Current Offset {{ v.offset * 1000 | date:'HH:mm:ss':'+0000' }}</span>
+            <button (click)="place_marker(v)" class="btn-green mt-2 mr-2">Place marker</button>
+            <span class="mt-2">Current Offset {{ v.offset * 1000 | date:'HH:mm:ss':'+0000' }}</span>
         </div>
     </div>
 </div>
