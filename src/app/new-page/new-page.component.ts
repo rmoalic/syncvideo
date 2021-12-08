@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Vod } from '../vod';
 import { TwitchPlayerComponent } from '../twitch-player/twitch-player.component';
 import { EventsService } from '../events.service';

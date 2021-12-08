@@ -42,7 +42,7 @@ export class EventsService {
       let d = new Date()
       let UTCseconds = (d.getTime() + d.getTimezoneOffset()*60*1000)/1000;
       if (name == ""  || vods.length == 0)
-        return Promise.reject("invalid params");
+        return Promise.reject("Missing event name or videos");
       return this.itemsCollection.add({
         name: name,
         uid: uid,
