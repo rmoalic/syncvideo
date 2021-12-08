@@ -7,10 +7,6 @@ module.exports = {
       content: [
         './src/**/*.{html,ts}',
       ],
-      options: {
-        keyframes: true,
-        fontFace: true,
-      },
     },
     darkMode: 'class', // or 'media' or 'class'
     theme: {    
@@ -20,9 +16,6 @@ module.exports = {
         white: colors.white,
         purple: colors.purple,
       },
-      extend: {},
-    },
-    variants: {
       extend: {},
     },
     plugins: [

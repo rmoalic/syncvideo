@@ -14,6 +14,17 @@
         <li>
           <a class="h-16 px-5 flex justify-center items-center w-full border-b" routerLink="/about" routerLinkActive="bg-gray-400">About</a>
         </li>
+        <li *ngIf="auth.user | async as user; else showLogin">
+          <a class="h-20 px-5 flex justify-center items-center w-full border-b flex flex-col" routerLink="/login" routerLinkActive="bg-gray-400">
+              <img [src]="user.photoURL" width="35px" class="rounded-full block"/>
+              <div>Logout</div>
+          </a>
+        </li>
+        <ng-template #showLogin>
+          <a class="h-16 px-5 flex justify-center items-center w-full border-b" routerLink="/login" routerLinkActive="bg-gray-400">
+            Login
+          </a>
+        </ng-template>
       </ul>
     </nav>
   </aside>
