@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-
-interface Events_d {
-  name: string;
-  pos: {
-    offset: number;
-    video_id: string;
-  }[];
-}
+import { EventsService } from '../events.service';
+import { Events_d } from '../event_d.model';
 
 @Component({
   selector: 'app-home-page',
@@ -16,15 +9,10 @@ interface Events_d {
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  private itemsCollection: AngularFirestoreCollection<Events_d>;
   item: Observable<Events_d[]>;
 
-  constructor(private afs: AngularFirestore) {
-    this.itemsCollection = afs.collection<Events_d>("events");
-    console.log("collect", this.itemsCollection);
-    this.item = this.itemsCollection.valueChanges();
-
-    console.log("item", this.item)
+  constructor(private es: EventsService) {
+    this.item = es.getItems();
   }
 
   ngOnInit(): void {

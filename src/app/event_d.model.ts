@@ -1,5 +1,5 @@
 
-interface Events_d {
+export interface Events_d {
     name: string;
     pos: {
       offset: number;

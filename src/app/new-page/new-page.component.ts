@@ -1,6 +1,8 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Vod } from '../vod';
 import { TwitchPlayerComponent } from '../twitch-player/twitch-player.component';
+import { Events_d } from '../event_d.model';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'app-new-page',
@@ -15,7 +17,7 @@ export class NewPageComponent implements OnInit {
   new_video_id: string = "";
   videos: Vod[] = [];
   temporary_link: string = "";
-  constructor() { }
+  constructor(private es: EventsService) { }
 
   add_new_video() {
     if (this.new_video_id == '') return;
@@ -47,7 +49,11 @@ export class NewPageComponent implements OnInit {
   }
 
   publish() {
-    
+    this.es.newItem(this.event_name, this.videos).then(() => {
+      alert("Sucess ");
+    }).catch((r) => {
+      alert("faillure "+r);
+    });
   }
 
   ngOnInit(): void {
