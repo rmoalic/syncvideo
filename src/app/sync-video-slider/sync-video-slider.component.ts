@@ -35,7 +35,7 @@ export class SyncVideoSliderComponent implements OnInit {
     this.playing = false;
   }
 
-  onSeek(event: Event) {
+  onSeek(event: Event | null) {
     this.videos.forEach((video) => {
       video.seek(this.seekTime);
     });
@@ -66,7 +66,8 @@ export class SyncVideoSliderComponent implements OnInit {
           console.log("All players READY");
           setTimeout(() => {
             this.ready = true;
-            this.max_time = this.getLongestVideoDuration();  
+            this.max_time = this.getLongestVideoDuration();
+            this.onSeek(null); 
           }, 1000); // TODO: find a way to check if video is loaded
         }
       });
