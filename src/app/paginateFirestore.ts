@@ -1,4 +1,5 @@
-import { AngularFirestoreCollection, CollectionReference, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { ValueTransformer } from '@angular/compiler/src/util';
+import { AngularFirestoreCollection, CollectionReference, Query, QueryDocumentSnapshot, QuerySnapshot, validateEventsArray } from '@angular/fire/compat/firestore';
 import { Observable, Subject } from 'rxjs';
 
 export class PaginateFireStore<T> {
@@ -19,11 +20,10 @@ export class PaginateFireStore<T> {
     this.query_append = query_append;
     
     let req = this.query_append(this.itemsCollection.ref)
-              .limit(this.elems_per_page);
+              .limit(this.elems_per_page + 1);
     
     req.get().then((value) => {
       if (this.itemsReqPost(value)) {
-        this.has_next = value.docs.length >= this.elems_per_page;
       }
     });
   }
@@ -37,9 +37,18 @@ export class PaginateFireStore<T> {
     if (value.docs.length == 0) return false;
     if (this.item_prev && value.docs[0].isEqual(this.item_prev)) return false;
 
-    this.item.next(value.docs.map(doc => doc.data()));
-    this.item_prev = value.docs[0];
-    this.item_last = value.docs[value.docs.length - 1];
+    let arr;
+    if (value.docs.length > this.elems_per_page) {
+      arr = value.docs.slice(0, -1);
+      this.has_next = true;
+    } else {
+      arr = value.docs;
+      this.has_next = false;
+    }
+    
+    this.item.next(arr.map(doc => doc.data()));
+    this.item_prev = arr[0];
+    this.item_last = arr[arr.length - 1];
 
     return true;
   }
@@ -49,14 +58,11 @@ export class PaginateFireStore<T> {
 
     let req = this.query_append(this.itemsCollection.ref)
               .startAfter(this.item_last)
-              .limit(this.elems_per_page);
+              .limit(this.elems_per_page + 1);
     
     req.get().then((value) => {
       if (this.itemsReqPost(value)) {
         this.page++;
-        this.has_next = value.docs.length >= this.elems_per_page;
-      } else {
-        this.has_next = false;
       }
     });
   }
@@ -66,7 +72,7 @@ export class PaginateFireStore<T> {
 
     let req = this.query_append(this.itemsCollection.ref)
               .endBefore(this.item_prev)
-              .limitToLast(this.elems_per_page);
+              .limitToLast(this.elems_per_page + 1);
 
     req.get().then((value) => {
       if (this.itemsReqPost(value)) {

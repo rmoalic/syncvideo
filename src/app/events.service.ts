@@ -16,7 +16,7 @@ export class EventsService {
   }
 
   getEvents_all(): PaginateFireStore<Events_d> {
-    return new PaginateFireStore<Events_d>(this.itemsCollection, 8, (ref) =>{
+    return new PaginateFireStore<Events_d>(this.itemsCollection, 7, (ref) =>{
       return ref.orderBy("creationDate", "desc");
     });;
   }
@@ -24,7 +24,7 @@ export class EventsService {
   getEvents_my(): Promise<PaginateFireStore<Events_d> | undefined> {
     return this.auth.currentUser.then((usr: any) => {
       let uid = usr.uid;
-      return new PaginateFireStore<Events_d>(this.itemsCollection, 8, (ref) =>{
+      return new PaginateFireStore<Events_d>(this.itemsCollection, 7, (ref) =>{
         return ref.orderBy("creationDate", "desc")
                   .where("uid", '==', uid);
       });
