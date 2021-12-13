@@ -8,6 +8,10 @@
                 <a href="{{ i | eventsDToUrl }}" class="link"><span class="w-20 truncate">{{ i.name }} (<span>{{ i.creationDate * 1000 | date }}</span>)</span></a>
             </li>
         </ul>
+        <div class="mt-2" *ngIf="my_items">
+            <button [hidden]="! my_items.has_prev" (click)="my_items.itemsPrevPage()" class="btn-green float-left">Prev</button>
+            <button [hidden]="! my_items.has_next" (click)="my_items.itemsNextPage()" class="btn-green float-right">Next</button>
+        </div>
         <div *ngIf="! my_item" class="">
             Login and create new events, they will appear here.
         </div>

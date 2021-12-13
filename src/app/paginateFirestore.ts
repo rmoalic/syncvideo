@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AngularFirestoreCollection, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { AngularFirestoreCollection, CollectionReference, DocumentData, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { Observable, Subject } from 'rxjs';
 
 export class PaginateFireStore<T> {
@@ -10,13 +10,16 @@ export class PaginateFireStore<T> {
   item_prev: QueryDocumentSnapshot<T> | undefined;
   page: number = 0;
   has_next: boolean = false;
+  query_append: (query:  CollectionReference<T>) => Query<T> | CollectionReference<T>;
 
-  constructor(collection: AngularFirestoreCollection<T>, elems_per_page: number = 8) {
+  constructor(collection: AngularFirestoreCollection<T>,
+              elems_per_page: number = 8, 
+              query_append: (query:  CollectionReference<T>) => Query<T> | CollectionReference<T> = (q) => q) {
     this.itemsCollection = collection;
     this.elems_per_page = elems_per_page;
+    this.query_append = query_append;
     
-    let req = this.itemsCollection.ref
-              .orderBy("creationDate", "desc")
+    let req = this.query_append(this.itemsCollection.ref)
               .limit(this.elems_per_page);
     
     req.get().then((value) => {
@@ -38,15 +41,14 @@ export class PaginateFireStore<T> {
     this.item.next(value.docs.map(doc => doc.data()));
     this.item_prev = value.docs[0];
     this.item_last = value.docs[value.docs.length - 1];
-  
+
     return true;
   }
 
   itemsNextPage() {
     if (this.item_last == undefined) return;
 
-    let req = this.itemsCollection.ref
-              .orderBy("creationDate", "desc")
+    let req = this.query_append(this.itemsCollection.ref)
               .startAfter(this.item_last)
               .limit(this.elems_per_page);
     
@@ -63,8 +65,7 @@ export class PaginateFireStore<T> {
   itemsPrevPage() {
     if (this.item_prev == undefined) return;
 
-    let req = this.itemsCollection.ref
-              .orderBy("creationDate", "desc")
+    let req = this.query_append(this.itemsCollection.ref)
               .endBefore(this.item_prev)
               .limitToLast(this.elems_per_page);
 
