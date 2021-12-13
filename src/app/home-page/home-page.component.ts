@@ -4,6 +4,7 @@ import * as firebase from 'firebase/compat';
 import { Observable } from 'rxjs';
 import { EventsService } from '../events.service';
 import { Events_d } from '../event_d.model';
+import { PaginateFireStore } from '../paginateFirestore';
 
 @Component({
   selector: 'app-home-page',
@@ -11,11 +12,13 @@ import { Events_d } from '../event_d.model';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+  items: PaginateFireStore<Events_d>;
   item: Observable<Events_d[]>;
   my_item: Observable<Events_d[]> | undefined = undefined;
 
   constructor(private es: EventsService, private auth: AngularFireAuth) {
-    this.item = es.getItems();
+    this.items = es.getEvents_all();
+    this.item = this.items.getItems();
 
     auth.user.subscribe((u: any) => {
       if (u == null) return;
@@ -24,14 +27,6 @@ export class HomePageComponent implements OnInit {
                this.my_item = item;
               }).catch((e: string) => console.log(e));
     });
-  }
-
-  itemPrevPage() {
-    this.es.itemsPrevPage();
-  }
-
-  itemNextPage() {
-    this.es.itemsNextPage();
   }
 
   ngOnInit(): void {

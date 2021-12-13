@@ -20,8 +20,8 @@
             </li>
         </ul>
         <div class="mt-2">
-            <button (click)="itemPrevPage()" class="btn-green float-left">Prev</button>
-            <button (click)="itemNextPage()" class="btn-green float-right">Next</button>
+            <button [hidden]="! items.has_prev" (click)="items.itemsPrevPage()" class="btn-green float-left">Prev</button>
+            <button [hidden]="! items.has_next" (click)="items.itemsNextPage()" class="btn-green float-right">Next</button>
         </div>
     </div>
 </div>
