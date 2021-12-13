@@ -19,5 +19,9 @@
                 <a href="{{ i | eventsDToUrl }}" class="link"><span class="w-20 truncate">{{ i.name }}</span> (<span>{{ i.creationDate * 1000 | date }}</span>)</a>
             </li>
         </ul>
+        <div class="mt-2">
+            <button (click)="itemPrevPage()" class="btn-green float-left">Prev</button>
+            <button (click)="itemNextPage()" class="btn-green float-right">Next</button>
+        </div>
     </div>
 </div>

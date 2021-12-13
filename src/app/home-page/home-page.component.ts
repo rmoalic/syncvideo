@@ -26,6 +26,14 @@ export class HomePageComponent implements OnInit {
     });
   }
 
+  itemPrevPage() {
+    this.es.itemsPrevPage();
+  }
+
+  itemNextPage() {
+    this.es.itemsNextPage();
+  }
+
   ngOnInit(): void {
   }
 
