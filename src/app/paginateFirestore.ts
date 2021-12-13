@@ -1,16 +1,15 @@
-import { ValueTransformer } from '@angular/compiler/src/util';
-import { AngularFirestoreCollection, CollectionReference, Query, QueryDocumentSnapshot, QuerySnapshot, validateEventsArray } from '@angular/fire/compat/firestore';
+import { AngularFirestoreCollection, CollectionReference, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { Observable, Subject } from 'rxjs';
 
 export class PaginateFireStore<T> {
   private itemsCollection: AngularFirestoreCollection<T>;
-  item: Subject<T[]> = new Subject<T[]>();
-  elems_per_page: number;
-  item_last: QueryDocumentSnapshot<T> | undefined;
-  item_prev: QueryDocumentSnapshot<T> | undefined;
-  page: number = 0;
+  private item: Subject<T[]> = new Subject<T[]>();
+  private elems_per_page: number;
+  private item_last: QueryDocumentSnapshot<T> | undefined;
+  private item_prev: QueryDocumentSnapshot<T> | undefined;
+  private page: number = 0;
+  private query_append: (query:  CollectionReference<T>) => Query<T> | CollectionReference<T>;
   has_next: boolean = false;
-  query_append: (query:  CollectionReference<T>) => Query<T> | CollectionReference<T>;
 
   constructor(collection: AngularFirestoreCollection<T>,
               elems_per_page: number = 8, 
