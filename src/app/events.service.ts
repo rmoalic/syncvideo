@@ -10,28 +10,24 @@ import { Vod } from './vod';
 })
 export class EventsService {
   private itemsCollection: AngularFirestoreCollection<Events_d>;  
-  events_all: PaginateFireStore<Events_d>;
-  events_my: PaginateFireStore<Events_d> | undefined = undefined;
 
   constructor(private afs: AngularFirestore, public auth: AngularFireAuth) {
     this.itemsCollection = afs.collection<Events_d>("events");
-    this.events_all = new PaginateFireStore<Events_d>(this.itemsCollection, 8, (ref) =>{
-      return ref.orderBy("creationDate", "desc");
-    });
   }
 
   getEvents_all(): PaginateFireStore<Events_d> {
-    return this.events_all;
+    return new PaginateFireStore<Events_d>(this.itemsCollection, 8, (ref) =>{
+      return ref.orderBy("creationDate", "desc");
+    });;
   }
 
   getEvents_my(): Promise<PaginateFireStore<Events_d> | undefined> {
     return this.auth.currentUser.then((usr: any) => {
       let uid = usr.uid;
-      this.events_my = new PaginateFireStore<Events_d>(this.itemsCollection, 8, (ref) =>{
+      return new PaginateFireStore<Events_d>(this.itemsCollection, 8, (ref) =>{
         return ref.orderBy("creationDate", "desc")
                   .where("uid", '==', uid);
       });
-      return this.events_my;
     });
   }
 

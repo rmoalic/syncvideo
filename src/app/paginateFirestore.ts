@@ -1,5 +1,4 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AngularFirestoreCollection, CollectionReference, DocumentData, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
+import { AngularFirestoreCollection, CollectionReference, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore';
 import { Observable, Subject } from 'rxjs';
 
 export class PaginateFireStore<T> {
