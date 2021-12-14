@@ -44,7 +44,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
       height: "100%",
       video: this.video_id,
       autoplay: false,
-      parent: ["localhost", "othersite.example.com"]
+      parent: ["localhost", "https://syncvideo-b2392.firebaseapp.com/", "https://syncvideo-b2392.web.app/"] //TODO: put in config file
     };
 
     this.ngZone.runOutsideAngular(() => {
@@ -59,7 +59,6 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   }
 
   setVideo(video_id: string): void {
-    console.log("HERE");
     if (this.ready) {
       this.player.setVideo(video_id, 0);
     } else {
