@@ -4,7 +4,8 @@
             <legend class="text-sm">Event informations</legend>
             <div>
                 <label for="idevent_name" class="block">Event Name: </label>
-                <input id="idevent_name" [(ngModel)]="event_name" type="text" required minlength="4">
+                <input id="idevent_name" [(ngModel)]="event_name" #evname type="text" required minlength="4">
+                <span class="text-xs text-red-700">{{ evname.validationMessage }}</span> 
             </div>
         </fieldset>
 
