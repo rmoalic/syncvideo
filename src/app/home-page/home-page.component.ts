@@ -30,6 +30,22 @@ export class HomePageComponent implements OnInit {
     });
   }
 
+  deleteMyItem(item: Events_d) {
+    if (! confirm(`Are you sure you want to delete event "${item.name}" ?`)) {
+      return;
+    }
+    this.es.deleteItem(item.id)
+        .then(() => {
+          alert("Deleted");
+          this.my_items?.reloadPage();
+          this.items.reloadPage();
+        })
+        .catch((err) => {
+          alert("Not Deleted :"+ err);
+          console.error(err);
+        });
+  }
+
   ngOnInit(): void {
   }
 

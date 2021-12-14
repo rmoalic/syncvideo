@@ -35,10 +35,12 @@ export class EventsService {
     return this.auth.currentUser.then((usr: any) => {
       let uid = usr.uid;
       let d = new Date()
+      const id = this.afs.createId();
       let UTCseconds = (d.getTime() + d.getTimezoneOffset()*60*1000)/1000;
       if (name == ""  || vods.length == 0)
         return Promise.reject("Missing event name or videos");
-      return this.itemsCollection.add({
+      return this.itemsCollection.doc(id).set({
+        id: id,
         name: name,
         uid: uid,
         creationDate: UTCseconds,
@@ -50,6 +52,15 @@ export class EventsService {
         }),
       });  
     });
-
   }
+
+  deleteItem(id: string): Promise<void> {
+    let i = id.trim();
+    if (i.indexOf("/") >= 0) return Promise.reject("id can't contain '/'");
+    let doc = this.itemsCollection.doc<Events_d>(id);
+    
+    console.log("Deleted", doc.get());
+    return doc.delete();
+  }
+
 }

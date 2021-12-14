@@ -22,8 +22,7 @@ export class PaginateFireStore<T> {
               .limit(this.elems_per_page + 1);
     
     req.get().then((value) => {
-      if (this.itemsReqPost(value)) {
-      }
+      if (this.itemsReqPost(value, false)) {}
     });
   }
 
@@ -31,21 +30,26 @@ export class PaginateFireStore<T> {
     return this.page > 0;
   }
 
-  private itemsReqPost(value: QuerySnapshot<T> | undefined): boolean {
-    if (value == undefined) return false;
-    if (value.docs.length == 0) return false;
-    if (this.item_prev && value.docs[0].isEqual(this.item_prev)) return false;
+  private itemsReqPost(value: QuerySnapshot<T> | undefined, is_back: boolean): boolean {
+    if (value == undefined) { console.log("value == undefined"); return false};
+    if (value.docs.length == 0) { console.log("value.docs.length == 0"); return false};
 
     let arr;
     if (value.docs.length > this.elems_per_page) {
-      arr = value.docs.slice(0, -1);
+      if (is_back) {
+        arr = value.docs.slice(1);
+      } else {
+        arr = value.docs.slice(0, -1);
+      }
       this.has_next = true;
     } else {
       arr = value.docs;
       this.has_next = false;
     }
     
-    this.item.next(arr.map(doc => doc.data()));
+    this.item.next(arr.map(doc => {
+      return { id: doc.id, ...doc.data()};
+    }));
     this.item_prev = arr[0];
     this.item_last = arr[arr.length - 1];
 
@@ -60,7 +64,7 @@ export class PaginateFireStore<T> {
               .limit(this.elems_per_page + 1);
     
     req.get().then((value) => {
-      if (this.itemsReqPost(value)) {
+      if (this.itemsReqPost(value, false)) {
         this.page++;
       }
     });
@@ -74,9 +78,33 @@ export class PaginateFireStore<T> {
               .limitToLast(this.elems_per_page + 1);
 
     req.get().then((value) => {
-      if (this.itemsReqPost(value)) {
+      if (this.itemsReqPost(value, true)) {
         this.page--;
         this.has_next = true;
+      }
+    });
+  }
+
+  reloadPage() {
+    if (this.item_prev == undefined) return;
+    let req;
+    if (this.item_prev.exists) { //TODO: exists is always true, but database seems to be able to use deleted id ?
+      req = this.query_append(this.itemsCollection.ref)
+      .startAt(this.item_prev)
+      .limit(this.elems_per_page + 1);
+    } else if (this.item_last?.exists) {
+      req = this.query_append(this.itemsCollection.ref)
+      .endAt(this.item_last)
+      .limitToLast(this.elems_per_page + 1);
+    } else {
+      req = this.query_append(this.itemsCollection.ref)
+      .limit(this.elems_per_page + 1);
+
+      this.page = 0;
+    }
+
+    req.get().then((value) => {
+      if (this.itemsReqPost(value, false)) {
       }
     });
   }
