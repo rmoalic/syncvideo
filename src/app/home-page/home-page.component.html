@@ -12,8 +12,16 @@
             </li>
         </ul>
         <div class="mt-2" *ngIf="my_items">
-            <button [hidden]="! my_items.has_prev" (click)="my_items.itemsPrevPage()" class="btn-green float-left">Prev</button>
-            <button [hidden]="! my_items.has_next" (click)="my_items.itemsNextPage()" class="btn-green float-right">Next</button>
+            <button [hidden]="! my_items.has_prev" (click)="my_items.itemsPrevPage()" class="btn-green float-left" title="Previous page">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </button>
+            <button [hidden]="! my_items.has_next" (click)="my_items.itemsNextPage()" class="btn-green float-right" title="Next page">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
         </div>
         <div *ngIf="! my_item" class="">
             Login and create new events, they will appear here.
@@ -27,8 +35,16 @@
             </li>
         </ul>
         <div class="mt-2">
-            <button [hidden]="! items.has_prev" (click)="items.itemsPrevPage()" class="btn-green float-left">Prev</button>
-            <button [hidden]="! items.has_next" (click)="items.itemsNextPage()" class="btn-green float-right">Next</button>
+            <button [hidden]="! items.has_prev" (click)="items.itemsPrevPage()" class="btn-green float-left" title="Previous page">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </button>
+            <button [hidden]="! items.has_next" (click)="items.itemsNextPage()" class="btn-green float-right" title="Next page">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
         </div>
     </div>
 </div>
