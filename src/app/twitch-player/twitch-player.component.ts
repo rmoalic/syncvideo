@@ -15,10 +15,10 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
 
   @Input()
   height: number = 300;
-  
+
   @ViewChild('playerdiv')
   player_div!: ElementRef;
-  
+
   player: any;
   ready: boolean = false;
 
@@ -28,7 +28,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   @Input()
   video_offset: number = 0;
 
-  @Output() 
+  @Output()
   ready_once: EventEmitter<any> = new EventEmitter();
 
   constructor(private ref: ChangeDetectorRef, private ngZone: NgZone) {
@@ -44,7 +44,7 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
       height: "100%",
       video: this.video_id,
       autoplay: false,
-      parent: ["localhost", "https://syncvideo-b2392.firebaseapp.com/", "https://syncvideo-b2392.web.app/"] //TODO: put in config file
+      parent: ["localhost", "syncvideo-b2392.firebaseapp.com", "syncvideo-b2392.web.app"] //TODO: put in config file
     };
 
     this.ngZone.runOutsideAngular(() => {
@@ -80,12 +80,11 @@ export class TwitchPlayerComponent implements OnInit, Ivideo {
   }
 
   getTotalDuration(): number {
-    console.log(this.player.getDuration());
-    return this.player.getDuration();
+    return this.player.getDuration() - this.video_offset;
   }
 
   getPosition(): number {
-    return this.player.getCurrentTime();
+    return this.player.getCurrentTime() - this.video_offset;
   }
 
   ngOnInit(): void {
